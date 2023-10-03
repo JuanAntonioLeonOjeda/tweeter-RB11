@@ -2,10 +2,11 @@ require('dotenv').config()
 
 const { checkConnection, syncModels } = require('./database/index')
 
-const User = require('./api/models/user.model')
+const addRelations = require('./database/relations')
 
 async function checkDB () {
   await checkConnection()
+  addRelations()
   await syncModels()
 }
 

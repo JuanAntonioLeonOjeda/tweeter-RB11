@@ -1,4 +1,4 @@
-const { DataTypes, DATE } = require('sequelize')
+const { DataTypes } = require('sequelize')
 const { connection } = require('../../database/index')
 
 const { isLongerThanFive, is18 } = require('../utils/validations')
@@ -19,14 +19,14 @@ const User = connection.define('user', {
   },
   password: {
     type: DataTypes.STRING,
-    allowNull: false,
-    validate: {
-      checkPass(value) {
-        if (!isLongerThanFive(value)) {
-          throw new Error ('Password must be at least 5 characters long')
-        }
-      }
-    }
+    allowNull: false
+    // validate: {
+    //   checkPass(value) {
+    //     if (!isLongerThanFive(value)) {
+    //       throw new Error ('Password must be at least 5 characters long')
+    //     }
+    //   }
+    // }
   },
   birth_date: {
     type: DataTypes.DATE,
