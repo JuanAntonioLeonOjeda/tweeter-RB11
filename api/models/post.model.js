@@ -9,6 +9,10 @@ const Post = connection.define('post', {
   body: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  likes: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0
   }
 },{
   updatedAt: false
