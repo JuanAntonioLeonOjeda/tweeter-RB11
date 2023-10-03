@@ -13,15 +13,16 @@ async function checkDB () {
 
 function startExpress () {
   const app = express()
-  
-  app.listen(process.env.PORT, () => {
-    console.log(`Listening on port ${process.env.PORT}`)
-  })
+    .use(express.json())
+
+    .use('/api', require('./api/routes'))
+
+    .listen(process.env.PORT, () => {
+      console.log(`Listening on port ${process.env.PORT}`)
+    })
 }
 
-async function startAPI () {
+;(async function startAPI () {
   await checkDB()
   startExpress()
-}
-
-startAPI()
+})()
