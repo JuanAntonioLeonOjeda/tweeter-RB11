@@ -1,6 +1,10 @@
 const router = require('express').Router()
 
 const {
+  checkAuth
+} = require('../utils/middelwares')
+
+const {
   getAllUsers,
   getOneUser,
   createUser,
@@ -9,10 +13,10 @@ const {
 } = require('../controllers/user.controller')
 
 router
-  .get('/', getAllUsers)
-  .get('/:userId', getOneUser)
-  .post('/', createUser)
-  .put('/:userId', updateUser)
-  .delete('/:userId', deleteUser)
+  .get('/', checkAuth, getAllUsers)
+  .get('/:userId', checkAuth, getOneUser)
+  .post('/', checkAuth, createUser)
+  .put('/:userId', checkAuth, updateUser)
+  .delete('/:userId', checkAuth, deleteUser)
 
 module.exports = router

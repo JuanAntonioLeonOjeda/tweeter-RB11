@@ -25,13 +25,13 @@ const getOneUser = async (req, res) => {
       attributes: {
         exclude: ['password']
       },
-      include: Contact
+      include: Contact   // Eager loading
     })
 
     if (!user) {
       return res.status(404).send('User not found')
     }
-    //const contact = await user.getContact()
+    //const contact = await user.getContact()  -> lazy loading
     return res.status(200).json(user)
   } catch (error) {
     console.log('Error getting one user')
