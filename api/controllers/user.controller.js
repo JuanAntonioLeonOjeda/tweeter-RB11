@@ -1,5 +1,6 @@
 const User = require('../models/user.model')
 const Contact = require('../models/contact.model')
+const Post = require('../models/post.model')
 
 const bcrypt = require('bcrypt')
 
@@ -36,6 +37,35 @@ const getOneUser = async (req, res) => {
   } catch (error) {
     console.log('Error getting one user')
     return res.status(500).json(error)
+  }
+}
+
+const getOwnProfile = async (req, res) => {
+  try {
+    const user = await User.findByPk(res.locals.user.id, {
+      attributes: {
+        exclude: ['password']
+      },
+      include: [
+          {
+            model: Contact
+          },
+          {
+            model: Post,
+            as: 'posts'
+          }
+      ]
+    })
+
+    // const posts = await user.getPosts()
+    // console.log(posts)
+    if (!user) {
+      return res.status(404).send('User not found')
+    }
+    return res.status(200).json(user)
+  } catch (error) {
+    console.log('Error getting profile')
+    return res.status(500).json({error: error.message})
   }
 }
 
@@ -105,6 +135,7 @@ const deleteUser = async (req, res) => {
 module.exports = {
   getAllUsers,
   getOneUser,
+  getOwnProfile,
   createUser,
   updateUser,
   deleteUser

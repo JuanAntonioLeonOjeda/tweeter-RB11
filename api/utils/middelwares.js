@@ -4,7 +4,7 @@ const User = require('../models/user.model')
 
 const checkAuth = async (req, res, next) => {
   if ( !req.headers.authorization ) {
-    return res.status(404).send('Token not found')
+    return res.status(401).send('Token not found')
   }
 
   jwt.verify(req.headers.authorization, process.env.JWT_SECRET, async (err, result) => {
@@ -17,7 +17,7 @@ const checkAuth = async (req, res, next) => {
         email: result.email
       }
     })
-
+    
     if (!user) {
       return res.status(404).send('User not found')
     }
@@ -27,6 +27,14 @@ const checkAuth = async (req, res, next) => {
   })
 }
 
+const checkAdmin = (req, res, next) => {
+  if ( res.locals.user.role !== 'admin') {
+    return res.status(401).send('User not authorized')
+  }
+  next()
+}
+
 module.exports = {
-  checkAuth
+  checkAuth,
+  checkAdmin
 }
