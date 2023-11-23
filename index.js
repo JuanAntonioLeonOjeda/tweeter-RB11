@@ -1,6 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
+const cors = require('cors')
 
 const { checkConnection, syncModels } = require('./database/index')
 
@@ -14,6 +15,7 @@ async function checkDB () {
 
 function startExpress () {
   const app = express()
+    .use(cors())
     .use(morgan('dev'))
     .use(express.json())
 
