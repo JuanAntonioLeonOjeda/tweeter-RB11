@@ -1,6 +1,6 @@
 const { Sequelize } = require('sequelize')
 
-const connection = new Sequelize(`mysql://${process.env.MYSQLUSER}:${process.env.MYSQL_ROOT_PASSWORD}@${process.env.MYSQLHOST}:${process.env.MYSQLPORT}/${process.env.MYSQL_DATABASE}`);
+const connection = new Sequelize(process.env.MYSQL_PRIVATE_URL);
 
 const checkConnection = async () => {
   try {
